@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import NavComponent from './NavComponent'
+import FooterComponent from './FooterComponent'
 
 const Layout = ({ children }) => {
 	return (
@@ -8,7 +10,11 @@ const Layout = ({ children }) => {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main>{children}</main>
+			<div className="container">
+				<NavComponent />
+				<main>{children}</main>
+				<FooterComponent />
+			</div>
 		</div>
 	)
 }
