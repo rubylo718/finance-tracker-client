@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AuthService from '../services/auth.service'
+import Toast from '../utils/toast-helper'
 
 const RegisterComponent = () => {
 	const router = useRouter()
@@ -25,21 +26,37 @@ const RegisterComponent = () => {
 		setCheckPassword(e.target.value)
 	}
 
-	const handleRegister = (e) => {
-		AuthService
-			.register({name, email, password, checkPassword})
-			.then(() => {
+	const handleRegister = async (e) => {
+		e.preventDefault()
+		try {
+			const { status, message } = await AuthService.register({
+				name,
+				email,
+				password,
+				checkPassword,
+			})
+			if (status === 'success') {
+				Toast.fire({
+					icon: 'success',
+					title: message
+				})
 				router.push('/users/login')
-			})
-			.catch((e) => {
-				console.log(e)
-			})
+			} else {
+				Toast.fire({
+					icon: 'error',
+					title: message
+				})
+			}
+			return
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	return (
 		<div className="row justify-content-md-center">
 			<div style={{ padding: '5rem' }} className="col-md-10">
-				<form>
+				<form onSubmit={handleRegister}>
 					<div>
 						<label htmlFor="name" className="form-label">
 							用戶名稱
@@ -49,6 +66,7 @@ const RegisterComponent = () => {
 							type="text"
 							className="form-control"
 							id="name"
+							required
 						/>
 					</div>
 					<br />
@@ -58,9 +76,10 @@ const RegisterComponent = () => {
 						</label>
 						<input
 							onChange={handleEmail}
-							type="text"
+							type="email"
 							className="form-control"
 							id="email"
+							required
 						/>
 					</div>
 					<br />
@@ -74,6 +93,8 @@ const RegisterComponent = () => {
 							className="form-control"
 							id="password"
 							placeholder="長度至少超過 8 個英文或數字"
+							minLength="8"
+							required
 						/>
 					</div>
 					<br />
@@ -87,12 +108,13 @@ const RegisterComponent = () => {
 							className="form-control"
 							id="checkPassword"
 							placeholder="請再輸入一次您的密碼"
+							minLength="8"
+							required
 						/>
 					</div>
 					<br />
 					<button
 						type="submit"
-						onClick={handleRegister}
 						className="btn btn-primary"
 					>
 						註冊
