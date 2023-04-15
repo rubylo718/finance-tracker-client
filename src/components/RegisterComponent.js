@@ -38,13 +38,13 @@ const RegisterComponent = () => {
 			if (status === 'success') {
 				Toast.fire({
 					icon: 'success',
-					title: message
+					title: message,
 				})
 				router.push('/users/login')
 			} else {
 				Toast.fire({
 					icon: 'error',
-					title: message
+					title: message,
 				})
 			}
 			return
@@ -70,7 +70,7 @@ const RegisterComponent = () => {
 						/>
 					</div>
 					<br />
-					<div className="form-group">
+					<div>
 						<label htmlFor="email" className="form-label">
 							電子信箱
 						</label>
@@ -83,7 +83,7 @@ const RegisterComponent = () => {
 						/>
 					</div>
 					<br />
-					<div className="form-group">
+					<div>
 						<label htmlFor="password" className="form-label">
 							密碼
 						</label>
@@ -98,7 +98,7 @@ const RegisterComponent = () => {
 						/>
 					</div>
 					<br />
-					<div className="form-group">
+					<div>
 						<label htmlFor="checkPassword" className="form-label">
 							確認密碼
 						</label>
@@ -113,10 +113,7 @@ const RegisterComponent = () => {
 						/>
 					</div>
 					<br />
-					<button
-						type="submit"
-						className="btn btn-primary"
-					>
+					<button type="submit" className="btn btn-primary">
 						註冊
 					</button>
 				</form>
