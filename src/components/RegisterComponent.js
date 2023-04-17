@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, uesEffect, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import AuthService from '../services/auth.service'
 import Toast from '../utils/toast-helper'
+import { useAuth } from '@/contexts/AuthContext'
 
 const RegisterComponent = () => {
 	const router = useRouter()
@@ -9,6 +10,13 @@ const RegisterComponent = () => {
 	let [email, setEmail] = useState('')
 	let [password, setPassword] = useState('')
 	let [checkPassword, setCheckPassword] = useState('')
+
+	const { isAuthenticated } = useAuth()
+	useEffect(()=>{
+		if(isAuthenticated) {
+			router.push('/')
+		}
+	},[router, isAuthenticated])
 
 	const handleName = (e) => {
 		setName(e.target.value)

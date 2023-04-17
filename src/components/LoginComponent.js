@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import AuthService from '../services/auth.service'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Toast from '../utils/toast-helper'
+import { useAuth } from '../contexts/AuthContext'
 
 const LoginComponent = () => {
 	const router = useRouter()
@@ -15,31 +15,25 @@ const LoginComponent = () => {
 		setPassword(e.target.value)
 	}
 
+	const { login, isAuthenticated } = useAuth()
+
 	const handleLogin = async (e) => {
 		e.preventDefault()
-		try {
-			const { status, message, token } = await AuthService.login({
-				email,
-				password,
-			})
-			if (status === 'success') {
-				Toast.fire({
-					icon: 'success',
-					title: message,
-				})
-				localStorage.setItem('authToken', token)
-				router.push('/')
-			} else {
-				Toast.fire({
-					icon: 'error',
-					title: message,
-				})
-			}
-			return
-		} catch (err) {
-			console.log(err)
+		const { status, message } = await login({ email, password })
+		if (status === 'success') {
+			Toast.fire({ icon: 'success', title: message })
+		} else {
+			Toast.fire({ icon: 'error', title: message })
 		}
+		return
 	}
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			router.push('/')
+		}
+	}, [router, isAuthenticated])
+
 	return (
 		<div className="row justify-content-md-center">
 			<div style={{ padding: '5rem' }} className="col-md-10">

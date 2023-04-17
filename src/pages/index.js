@@ -1,36 +1,16 @@
 import Layout from '@/components/Layout'
-import AuthService from '@/services/auth.service'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import Toast from '@/utils/toast-helper'
+import { useRouter } from 'next/router'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function Home() {
 	const router = useRouter()
-
+	const { isAuthenticated } = useAuth()
 	useEffect(() => {
-		const checkTokenIsValid = async () => {
-			const authToken = localStorage.getItem('authToken')
-			if (!authToken) {
-				Toast.fire({
-					icon: 'warning',
-					title: 'Please login.',
-				})
-				router.push('/users/login')
-			} else {
-				const user = await AuthService.getCurrentUser(authToken)
-				if (user) {
-					return
-				} else {
-					Toast.fire({
-						icon: 'warning',
-						title: 'Token expired. Please login again.'
-					})
-					router.push('/user/login')
-				}
-			}
-		}
-		checkTokenIsValid()
-	}, [router])
+		if (!isAuthenticated) {
+			router.push('/users/login')
+		} 
+	}, [router, isAuthenticated])
 
 	return (
 		<Layout>
