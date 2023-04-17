@@ -25,6 +25,18 @@ const AuthService = {
 			console.log(err)
 		}
 	},
+	getCurrentUser: async (authToken) => {
+		try {
+			const { data } = await apiHelper.get('/currentUser', {
+				headers: {
+					Authorization: 'Bearer ' + authToken,
+				},
+			})
+			return data
+		} catch (err) {
+			console.log(err)
+		}
+	},
 }
 
 export default AuthService
