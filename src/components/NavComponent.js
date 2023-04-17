@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
+import { useAuth } from '../contexts/AuthContext'
 import Toast from '@/utils/toast-helper'
 
 const NavComponent = () => {
 	const router = useRouter()
+	const { logout, currentUser } = useAuth()
 	const handleLogout = () => {
-		localStorage.removeItem('authToken')
+		logout()
 		Toast.fire({
 			icon: 'success',
 			title: 'Logout successfully. See U :)',
@@ -20,13 +22,15 @@ const NavComponent = () => {
 					<Link className="navbar-brand" href="/">
 						Finance Tracker
 					</Link>
-					<button
-						onClick={handleLogout}
-						className="btn btn-light"
-						role="button"
-					>
-						Logout
-					</button>
+					{currentUser && (
+						<button
+							onClick={handleLogout}
+							className="btn btn-light"
+							role="button"
+						>
+							Logout
+						</button>
+					)}
 				</div>
 			</nav>
 		</div>
