@@ -27,6 +27,18 @@ const RecordService = {
 			console.log(err)
 		}
 	},
+	deleteRecord: async (_id) => {
+		try {
+			const authToken = localStorage.getItem('authToken')
+			const { data } = await apiHelper.delete(
+				'/records/' + _id,
+				{ headers: { Authorization: 'Bearer ' + authToken } }
+			)
+			return data
+		} catch (err) {
+			console.log(err)
+		}
+	},
 }
 
 export default RecordService

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import RecordService from '@/services/record.service'
+import Toast from '@/utils/toast-helper'
 
 const RecordComponent = () => {
 	const [recordData, setRecordData] = useState([])
@@ -12,7 +13,29 @@ const RecordComponent = () => {
 			}
 		}
 		getRecords()
-	}, [])
+	}, [recordData])
+
+	const handleDeleteRecord = async (e) => {
+		try {
+			const { status } = await RecordService.deleteRecord(e.target.id)
+			if (status === 'success') {
+				Toast.fire({
+					icon: 'success',
+					title: 'Delete successfully.',
+				})
+				return
+			} else {
+				Toast.fire({
+					icon: 'error',
+					title: 'Delete failed.',
+				})
+				return
+			}
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
 	let totalAmount = 0
 	return (
 		<div style={{ padding: '5rem' }}>
@@ -32,7 +55,7 @@ const RecordComponent = () => {
 						return (
 							<li key={d._id} className="list-group-item">
 								<div className="row d-flex flex-wrap align-items-center">
-									<div class="col-1 d-flex justify-content-center"></div>
+									<div className="col-1 d-flex justify-content-center"></div>
 									<div className="col-4">
 										<h5>{d.name}</h5>
 										<small>{d.date.slice(0, 10)}</small>
@@ -48,7 +71,12 @@ const RecordComponent = () => {
 											>
 												Edit
 											</button>
-											<button type="button" className="btn btn-outline-danger">
+											<button
+												onClick={handleDeleteRecord}
+												type="button"
+												className="btn btn-outline-danger"
+												id={d._id}
+											>
 												Delete
 											</button>
 										</div>
@@ -61,7 +89,7 @@ const RecordComponent = () => {
 			</div>
 			<div className="d-flex justify-content-center mt-4">
 				<Link href="/records/newRecord">
-					<button class="btn btn-warning" type="button">
+					<button className="btn btn-warning" type="button">
 						新增記錄
 					</button>
 				</Link>
