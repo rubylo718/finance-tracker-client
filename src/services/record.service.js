@@ -30,10 +30,37 @@ const RecordService = {
 	deleteRecord: async (_id) => {
 		try {
 			const authToken = localStorage.getItem('authToken')
-			const { data } = await apiHelper.delete(
+			const { data } = await apiHelper.delete('/records/' + _id, {
+				headers: { Authorization: 'Bearer ' + authToken },
+			})
+			return data
+		} catch (err) {
+			console.log(err)
+		}
+	},
+	editRecord: async ({ _id, name, categoryId, amount }) => {
+		try {
+			const authToken = localStorage.getItem('authToken')
+			const { data } = await apiHelper.put(
 				'/records/' + _id,
+				{
+					name,
+					categoryId,
+					amount,
+				},
 				{ headers: { Authorization: 'Bearer ' + authToken } }
 			)
+			return data
+		} catch (err) {
+			console.log(err)
+		}
+	},
+	getRecord: async (_id) => {
+		try {
+			const authToken = localStorage.getItem('authToken')
+			const { data } = await apiHelper.get('/records/' + _id, {
+				headers: { Authorization: 'Bearer ' + authToken },
+			})
 			return data
 		} catch (err) {
 			console.log(err)

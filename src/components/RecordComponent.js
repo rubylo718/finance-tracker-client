@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import RecordService from '@/services/record.service'
 import Toast from '@/utils/toast-helper'
 
 const RecordComponent = () => {
 	const [recordData, setRecordData] = useState([])
+	const router = useRouter()
 	useEffect(() => {
 		const getRecords = async () => {
 			const records = await RecordService.getAllRecords()
@@ -14,6 +16,10 @@ const RecordComponent = () => {
 		}
 		getRecords()
 	}, [recordData])
+
+	const handleEditRecord = async (e) => {
+		router.push('/records/' + e.target.id)
+	}
 
 	const handleDeleteRecord = async (e) => {
 		try {
@@ -46,7 +52,7 @@ const RecordComponent = () => {
 				className="d-flex justify-content-end"
 				style={{ color: '#ff6600', fontWeight: '400', fontSize: '48px' }}
 			>
-				{recordData.forEach((d) => (totalAmount += d.amount))}
+				{recordData?.forEach((d) => (totalAmount += d.amount))}
 				{totalAmount}
 			</p>
 			<div>
@@ -66,8 +72,10 @@ const RecordComponent = () => {
 									<div className="col-auto">
 										<div className="d-grid gap-2 d-md-flex justify-content-md-end">
 											<button
+												onClick={handleEditRecord}
 												type="button"
 												className="btn btn-outline-primary mx-2"
+												id={d._id}
 											>
 												Edit
 											</button>
@@ -90,9 +98,18 @@ const RecordComponent = () => {
 			<div className="d-flex justify-content-center mt-4">
 				<Link href="/records/newRecord">
 					<button className="btn btn-warning" type="button">
-						新增記錄
+						新增
 					</button>
 				</Link>
+				<button
+					className="btn btn-info mx-2"
+					type="button"
+					onClick={() => {
+						router.back()
+					}}
+				>
+					Back
+				</button>
 			</div>
 		</div>
 	)

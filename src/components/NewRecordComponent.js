@@ -67,7 +67,6 @@ const NewRecordComponent = () => {
 							type="text"
 							className="form-control"
 							id="categoryId"
-							value="3"
 							placeholder="不分類"
 							disabled
 						/>
@@ -89,6 +88,15 @@ const NewRecordComponent = () => {
 					<button type="submit" className="btn btn-warning">
 						新增
 					</button>
+					<button
+					className="btn btn-info mx-2"
+					type="button"
+					onClick={() => {
+						router.back()
+					}}
+				>
+					Back
+				</button>
 				</form>
 			</div>
 		</div>
