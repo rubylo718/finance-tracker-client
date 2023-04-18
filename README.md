@@ -1,38 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Finance Tracker - Client
 
-## Getting Started
+## Introduction
+Finance Tracker 是家庭財務紀錄小幫手。使用者可以將支出項目與金額紀錄在此系統上，系統會進行金額統計。
 
-First, run the development server:
+本專案採前後分離的方式進行開發，使用 React.js 搭配 Next.js 框架進行開發。後端 repo 連結[請按此](https://github.com/rubylo718/finance-tracker-server)。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Demo
+[Live Demo 連結]()
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 現有功能
+#### 使用者認證
+- 使用者可用 email 註冊帳號。
+- 註冊後使用 email 與密碼進行登入。
+- 登入後使用 jwt 進行認證，token 有效期間內不需重複登入。
+- 登出。
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+#### 記錄
+- 使用者可以新增支出紀錄，包含項目名稱與金額。
+- 使用者可看到目前資料庫內所有記錄，以及總金額。
+- 使用者可以刪除記錄。
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### 開發中
+#### 記錄
+- 使用者變更帳號名稱、密碼。
+- 使用者更新支出記錄。
+- 支出記錄可依類別進行統計。
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### 管理者
+- 管理者可以看到維護支出類別清單。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### 其他
+- 支出類別、操作選項 icon 美化。
+- 導入 chart.js 產出統計圖表。
 
-## Learn More
+## Built with
+- Runtime Environment: Node.js @16.14.2
+- Front-end Library: React.js @18.2.0
+- Front-end Framework: Next.js @13.3.0
+- UI Framework : Bootstrap @5.2.3
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Author
+Ruby Lo
