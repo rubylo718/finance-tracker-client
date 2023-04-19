@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = "http://localhost:8080"
+const baseURL = "http://finance-tracker-server-dev.ap-northeast-1.elasticbeanstalk.com/"
 
 export const apiHelper = axios.create({
   baseURL, validateStatus: function (status) {
