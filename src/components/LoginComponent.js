@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import Toast from '../utils/toast-helper'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -68,8 +69,14 @@ const LoginComponent = () => {
 						<button type="submit" className="btn btn-primary">
 							登入
 						</button>
+						<Link href="/users/register" className="mx-3">
+							<button type="button" className="btn btn-dark">
+								無帳號按此註冊
+							</button>
+						</Link>
 					</div>
 				</form>
+				<br />
 			</div>
 		</div>
 	)
